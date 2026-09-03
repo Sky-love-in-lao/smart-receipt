@@ -217,13 +217,18 @@ function App() {
           <div className="bg-white rounded-xl shadow overflow-hidden border border-gray-100">
             <div className="bg-teal-800 text-white py-4 px-6 font-bold flex flex-col md:flex-row justify-between items-center gap-4">
               <span className="flex items-center gap-2"><PackageSearch size={20} /> 상점별 최저가 상품 한눈에 보기</span>
-              <div className="relative w-full md:w-64">
+              <div className="relative w-full md:w-72">
+                <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                  <svg className="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                  </svg>
+                </div>
                 <input 
                   type="text" 
                   placeholder="예: 고기, 라면 검색..." 
                   value={searchKeyword}
                   onChange={(e) => setSearchKeyword(e.target.value)}
-                  className="w-full pl-3 pr-4 py-1.5 text-sm rounded-lg text-gray-900 border-none outline-none focus:ring-2 focus:ring-teal-400"
+                  className="w-full pl-10 pr-4 py-2 text-sm rounded-full bg-white text-gray-900 border-2 border-teal-600 focus:border-teal-400 outline-none shadow-sm"
                 />
               </div>
             </div>
@@ -242,6 +247,7 @@ function App() {
                     <tr><td colSpan={4} className="p-12 text-center text-gray-500 text-lg">분석된 상품이 없습니다.</td></tr>
                   ) : (
                     Object.keys(comparisons)
+                      .sort((a, b) => a.localeCompare(b)) // 가나다 순 정렬
                       .filter(productName => 
                         searchKeyword.trim() === '' || 
                         productName.toLowerCase().includes(searchKeyword.toLowerCase().trim())
