@@ -95,27 +95,20 @@ function App() {
           </div>
           
           {/* 환율 설정 패널 */}
-          <div className="bg-teal-50 p-3 rounded-lg border border-teal-100 text-sm shadow-inner min-w-[250px]">
-            <h3 className="font-bold text-teal-900 mb-3 flex items-center gap-1"><RefreshCw size={14}/> 적용 중인 환율 (USD-KRW 네이버 연동)</h3>
-            <div className="flex flex-col gap-2 text-gray-700">
-              <label className="flex items-center justify-between">
-                <span className="font-semibold">1 USD = </span>
-                <div className="flex items-center gap-1">
-                  <input type="number" value={usdToLak} onChange={e => setUsdToLak(Number(e.target.value) || 0)} className="border p-1 w-24 rounded text-right" /> ₭
-                </div>
-              </label>
-              <label className="flex items-center justify-between">
-                <span className="font-semibold">1 USD = </span>
-                <div className="flex items-center gap-1">
-                  <input type="number" value={usdToThb} onChange={e => setUsdToThb(Number(e.target.value) || 0)} className="border p-1 w-24 rounded text-right" /> ฿(바트)
-                </div>
-              </label>
-              <label className="flex items-center justify-between">
-                <span className="font-semibold">1 USD = </span>
-                <div className="flex items-center gap-1">
-                  <input type="number" value={usdToKrw} onChange={e => setUsdToKrw(Number(e.target.value) || 0)} className="border p-1 w-24 rounded text-right" /> 원
-                </div>
-              </label>
+          <div className="bg-teal-50 border border-teal-100 rounded-xl p-4 self-start shadow-sm min-w-[280px]">
+            <h3 className="font-bold text-teal-900 mb-4 flex items-center gap-2"><RefreshCw size={16} /> 적용 중인 환율 (USD-KRW 네이버 연동)</h3>
+            <div className="grid grid-cols-[auto_1fr_auto] items-center gap-x-3 gap-y-3 text-sm font-bold text-gray-700">
+              <span className="text-right whitespace-nowrap">1 USD =</span>
+              <input type="number" value={usdToLak} onChange={e => setUsdToLak(Number(e.target.value) || 0)} className="border border-gray-300 px-3 py-1.5 w-full rounded-lg text-right focus:ring-2 focus:ring-teal-400 focus:border-teal-400 outline-none transition-all" /> 
+              <span className="w-14">₭</span>
+
+              <span className="text-right whitespace-nowrap">1 USD =</span>
+              <input type="number" value={usdToThb} onChange={e => setUsdToThb(Number(e.target.value) || 0)} className="border border-gray-300 px-3 py-1.5 w-full rounded-lg text-right focus:ring-2 focus:ring-teal-400 focus:border-teal-400 outline-none transition-all" /> 
+              <span className="w-14">฿(바트)</span>
+
+              <span className="text-right whitespace-nowrap">1 USD =</span>
+              <input type="number" value={usdToKrw} onChange={e => setUsdToKrw(Number(e.target.value) || 0)} className="border border-gray-300 px-3 py-1.5 w-full rounded-lg text-right bg-gray-100 text-gray-500 outline-none cursor-not-allowed" readOnly /> 
+              <span className="w-14">원</span>
             </div>
           </div>
         </div>
