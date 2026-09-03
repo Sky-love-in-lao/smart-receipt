@@ -8,10 +8,10 @@ function App() {
   
   const [isScanning, setIsScanning] = useState(false);
   const [view, setView] = useState<'DASHBOARD' | 'COMPARE'>('DASHBOARD');
-
   // 실거래 환율 상태 (USD 기준)
   const [usdToLak, setUsdToLak] = useState(23000); // 1 USD = 23,000 LAK
   const [usdToThb, setUsdToThb] = useState(35);    // 1 USD = 35 THB
+  const [searchKeyword, setSearchKeyword] = useState<string>(''); 
   const [usdToKrw, setUsdToKrw] = useState(1350);  // 1 USD = 1,350 KRW (네이버 연동)
 
   useEffect(() => {
@@ -215,8 +215,17 @@ function App() {
 
         {view === 'COMPARE' && (
           <div className="bg-white rounded-xl shadow overflow-hidden border border-gray-100">
-            <div className="bg-teal-800 text-white py-4 px-6 font-bold flex justify-between items-center">
+            <div className="bg-teal-800 text-white py-4 px-6 font-bold flex flex-col md:flex-row justify-between items-center gap-4">
               <span className="flex items-center gap-2"><PackageSearch size={20} /> 상점별 최저가 상품 한눈에 보기</span>
+              <div className="relative w-full md:w-64">
+                <input 
+                  type="text" 
+                  placeholder="예: 고기, 라면 검색..." 
+                  value={searchKeyword}
+                  onChange={(e) => setSearchKeyword(e.target.value)}
+                  className="w-full pl-3 pr-4 py-1.5 text-sm rounded-lg text-gray-900 border-none outline-none focus:ring-2 focus:ring-teal-400"
+                />
+              </div>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-sm text-left">
@@ -232,7 +241,12 @@ function App() {
                   {Object.keys(comparisons).length === 0 ? (
                     <tr><td colSpan={4} className="p-12 text-center text-gray-500 text-lg">분석된 상품이 없습니다.</td></tr>
                   ) : (
-                    Object.keys(comparisons).map(productName => {
+                    Object.keys(comparisons)
+                      .filter(productName => 
+                        searchKeyword.trim() === '' || 
+                        productName.toLowerCase().includes(searchKeyword.toLowerCase().trim())
+                      )
+                      .map(productName => {
                       const productList = comparisons[productName];
                       
                       // 최저가 비교는 원화로 환산하여 정렬
@@ -280,6 +294,9 @@ function App() {
                         </tr>
                       );
                     })
+                  )}
+                  {Object.keys(comparisons).length > 0 && Object.keys(comparisons).filter(p => p.toLowerCase().includes(searchKeyword.toLowerCase().trim())).length === 0 && (
+                    <tr><td colSpan={4} className="p-12 text-center text-gray-500 text-lg">검색어 "{searchKeyword}"에 해당하는 상품이 없습니다.</td></tr>
                   )}
                 </tbody>
               </table>
