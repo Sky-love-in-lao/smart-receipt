@@ -1,7 +1,9 @@
 import { create } from 'zustand';
 import axios from 'axios';
 
-const api = axios.create({ baseURL: 'http://localhost:3001/api' });
+const api = axios.create({
+  baseURL: '/api'
+});
 
 export type ReceiptItem = {
   id?: string;
